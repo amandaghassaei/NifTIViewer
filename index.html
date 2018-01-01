@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>NifTI Viewer</title>
+
+    <link rel="stylesheet" type="text/css" href="dependencies/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="dependencies/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="dependencies/flat-ui.min.css">
+
+    <script type="text/javascript" src="dependencies/jquery-3.1.0.min.js"></script>
+    <script type="text/javascript" src="dependencies/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="dependencies/flat-ui.min.js"></script>
+    <script type="text/javascript" src="dependencies/underscore-min.js"></script>
+    <script type="text/javascript" src="dependencies/three.min.js"></script>
+    <script type="text/javascript" src="dependencies/OrbitControls.js"></script>
+    <script type="text/javascript" src="dependencies/StreamSaver.js"></script>
+    <script type="text/javascript" src="dependencies/polyfill.min.js"></script>
+    <script type="text/javascript" src="dependencies/FileSaver.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script type="text/javascript" src="js/threeView.js"></script>
+    <script type="text/javascript" src="js/dataView.js"></script>
+    <script type="text/javascript" src="js/controls.js"></script>
+    <script type="text/javascript" src="js/ControlPoint.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+</head>
+<body>
+<div id="threeContainer"></div>
+<input type="file" id="fileSelector"/>
+<div id="controlsLeft">
+    <a href="#" id="about" class="btn btn-lg btn-default">About</a><br/><br/>
+    <a href="#" id="upload" class="btn btn-lg btn-success">Select File</a><br/><br/>
+    <div id="fileInfo">
+        <b>Name:</b>&nbsp;&nbsp; <span id="currentFileName"></span><br/>
+        <b>Length:</b>&nbsp;&nbsp; <span id="currentFileSize"></span> bytes<br/><br/>
+        <b>Size (XYZ):</b>&nbsp;&nbsp; <input id="sizeX" value="" placeholder="" class="form-control int" type="text">
+            &nbsp; <input id="sizeY" value="" placeholder="" class="form-control int" type="text">
+            &nbsp; <input id="sizeZ" value="" placeholder="" class="form-control int" type="text"><br/><br/>
+        <b>Header Length:</b>&nbsp;&nbsp; <input id="headerLength" value="" placeholder="" class="form-control int" type="text"> &nbsp;bytes<br/><br/>
+        <b>Current Layer:</b>&nbsp;&nbsp; <input id="layerNumber" value="" placeholder="" class="form-control int" type="text"><br/><br/>
+        <a href="#" id="savePNG" class="btn btn-lg btn-block btn-default">Save Current Layer as PNG</a><br/><br/>
+        <div class="extraSpace"></div>
+    </div>
+</div>
+<div id="flythroughSlider">
+    <a href="#" id="layerUp"><span class="fui-triangle-up"></span></a>
+    <span class="label-slider"></span><div class="flat-slider ui-slider ui-corner-all ui-slider-vertical ui-widget ui-widget-content"></div>
+    <a href="#" id="layerDown"><span class="fui-triangle-down"></span></a>
+</div>
+
+<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal-dialog modal-med">
+        <div class="modal-content">
+            <div class="modal-body">
+                <b>NifTI Viewer</b><br/><br/>
+                Tool for cropping and masking arbitrary profiles from CT volumetric data in .tom
+                file format.  Only currently supported on Chrome.  More documentation coming soon.<br/><br/>
+                By <a href="http://www.amandaghassaei.com/" target="_blank">Amanda Ghassaei</a>, code on <a href="https://github.com/amandaghassaei/CTCropper" target="_blank">Github</a>.
+                <br/><br/>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
