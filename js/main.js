@@ -12,9 +12,9 @@ var allDataTypes = {
 
 var dataViewTypes = {
     "uint8": THREE.UnsignedByteType,
-    "int8": THREE.ByteType,
-    "int16": THREE.ShortType,
-    "int32": THREE.IntType,
+    "int8": THREE.UnsignedByteType,
+    "int16": THREE.UnsignedByteType,
+    "int32": THREE.UnsignedByteType,
     "float32": THREE.FloatType
 };
 
@@ -60,17 +60,28 @@ function handleFileSelect(evt) {
     $('#flythroughSlider>div').slider( "value", layerNumber);
 
     readHeader();
-    clear();
 }
 
 function chunkRead(e){
     if (e.target.error == null) {
-        var data = new Uint16Array(e.target.result);
-        var byteData = new Uint8Array(data.length);
-        for (var i=0;i<data.length;i++){
-            byteData[i] = data[i]>>8;
+        var byteData;
+        if (dataType == "uint8" || dataType == "int8"){
+            byteData = new Uint8Array(e.target.result);
+        } else if (dataType == "int16"){
+            var data = new Uint16Array(e.target.result);
+            byteData = new Uint8Array(data.length);
+            for (var i=0;i<data.length;i++){
+                byteData[i] = data[i]>>8;
+            }
+        } else if (dataType == "int32"){
+            var data = new Uint32Array(e.target.result);
+            byteData = new Uint8Array(data.length);
+            for (var i=0;i<data.length;i++){
+                byteData[i] = data[i]>>24;
+            }
+        } else if (dataType == "float"){
+            byteData = new Float32Array(e.target.result);
         }
-        console.log(byteData);
         showData(byteData);
         currentData = byteData;
         if (lastLayerRequested != layerNumber) getLayer();
@@ -98,19 +109,18 @@ function getHeaderLength(e){
 
 function readShort(data, start, end){
     var short = new Int16Array(data.slice(start, end));
-    console.log(short);
+    // console.log(short);
     return short;
 }
 
 function readFloat(data, start, end){
     var float = new Float32Array(data.slice(start, end));
-    console.log(float);
+    // console.log(float);
     return float;
 }
 
 function parseHeader(e){
     if (e.target.error == null) {
-        console.log(e.target.result);
         var data = e.target.result;
         var dataArrayDimensions = readShort(data, 40, 56);
         if (dataArrayDimensions[0] !== 3){
